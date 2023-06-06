@@ -1,49 +1,45 @@
-<div class="section-part">
+<div class="root">
+  <div></div>
+  <div>
     <button mat-raised-button color="primary" (click)="agregarUsuario()">
         <mat-icon>add</mat-icon>
         <span>Agregar Usuario</span>
     </button>
-</div>
-<div class="section-part">
-  <div *ngIf="usuariosSource.length == 0">
-    <div class="mensaje-sin-usuario">
-      <span>No hay usuarios registrados</span>
-    </div>
   </div>
-  <div *ngIf="usuariosSource.length > 0">
-    <table mat-table [dataSource]="usuariosSource" class="mat-elevation-z8">  
+  <div class="column-table">
+    <table mat-table [dataSource]="usuariosSource" matSort class="mat-elevation-z8">  
       <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
         <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
       </ng-container>
   
       <ng-container matColumnDef="apellidoPaterno">
-          <th mat-header-cell *matHeaderCellDef> Apellido Paterno </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido Paterno </th>
           <td mat-cell *matCellDef="let element"> {{element.apellidoPaterno}} </td>
         </ng-container>
   
         <ng-container matColumnDef="apellidoMaterno">
-          <th mat-header-cell *matHeaderCellDef> Apellido Materno </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido Materno </th>
           <td mat-cell *matCellDef="let element"> {{element.apellidoMaterno}} </td>
         </ng-container>
   
         <ng-container matColumnDef="salario">
-          <th mat-header-cell *matHeaderCellDef> Salario </th>
-          <td mat-cell *matCellDef="let element"> {{element.salario}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Salario </th>
+          <td mat-cell *matCellDef="let element"> {{element.salario | currency}} </td>
         </ng-container>
   
         <ng-container matColumnDef="curp">
-          <th mat-header-cell *matHeaderCellDef> CURP </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> CURP </th>
           <td mat-cell *matCellDef="let element"> {{element.curp}} </td>
         </ng-container>
   
         <ng-container matColumnDef="telefono">
-          <th mat-header-cell *matHeaderCellDef> Telefono </th>
-          <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
+          <td mat-cell *matCellDef="let element"> {{element.telefono | phone}} </td>
         </ng-container>
 
         <ng-container matColumnDef="editar">
-          <th mat-header-cell *matHeaderCellDef></th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
           <td mat-cell *matCellDef="let element">
             <button mat-raised-button color="primary" (click)="editarUsuario(element)">
               <mat-icon>edit</mat-icon>
@@ -65,6 +61,16 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <div *ngIf="usuariosSource.data.length == 0">
+      <div class="mensaje-sin-usuario">
+        <span>No hay usuarios registrados</span>
+      </div>
+    </div>
   </div>
-    
+  <div>
+    <mat-paginator #paginator 
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>
 </div>

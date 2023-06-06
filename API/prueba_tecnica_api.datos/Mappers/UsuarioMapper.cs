@@ -53,6 +53,9 @@ namespace prueba_tecnica_api.datos.Mappers
                 .HasMaxLength(18)
                 .IsRequired();
 
+            entity.HasIndex(u => u.CURP)
+                .IsUnique();
+
             entity.Property(u => u.Telefono)
                 .HasColumnName("telefono")
                 .HasColumnType("nvarchar")

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using prueba_tecnica_api.dominio.Repositories;
 using prueba_tecnica_api.DTO;
 using prueba_tecnica_api.Extensions;
@@ -27,7 +28,7 @@ namespace prueba_tecnica_api.Controllers
             }
             catch (Exception ex)
             {
-                generalResponse.SetError(ex);
+                generalResponse.SetError("Ocurrió un error al tratar de consultar los usuarios", ex);
             }
 
             return Ok(generalResponse);
@@ -43,9 +44,24 @@ namespace prueba_tecnica_api.Controllers
                 generalResponse.HttpCode = 201;
                 generalResponse.Data = result;
             }
+            catch(SqlException ex)
+            {
+                string messageError;
+
+                if (ex.Message.Contains("Violation of UNIQUE KEY constraint 'UQ__Usuarios__2CDDD194142D3693'"))
+                {
+                    messageError = "El campo CURP ya se ha registrado anteriormente";
+                }
+                else
+                {
+                    messageError = "Ocurrió un error al tratar de agregar un usuario nuevo";
+                }
+
+                generalResponse.SetError(messageError, ex);
+            }
             catch (Exception ex)
             {
-                generalResponse.SetError(ex);
+                generalResponse.SetError("Ocurrió un error al tratar de agregar un usuario nuevo", ex);
             }
             return Ok(generalResponse);
         }
@@ -62,7 +78,7 @@ namespace prueba_tecnica_api.Controllers
             }
             catch (Exception ex)
             {
-                generalResponse.SetError(ex);
+                generalResponse.SetError("Ocurrió un error al tratar de modificar el usuario", ex);
             }
             return Ok(generalResponse);
         }
@@ -79,7 +95,7 @@ namespace prueba_tecnica_api.Controllers
             }
             catch (Exception ex)
             {
-                generalResponse.SetError(ex);
+                generalResponse.SetError("Ocurrió un error al tratar de borrar al usuario", ex);
             }
             return Ok(generalResponse);
         }

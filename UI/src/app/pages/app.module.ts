@@ -10,12 +10,14 @@ import { MaterialModule } from '../shared/material/material.module';
 import { AgregarOEditarUsuariosComponent } from './usuarios/agregar-oeditar-usuarios/agregar-oeditar-usuarios.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { PhonePipe } from '../shared/pipes/phone.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListarUsuariosComponent,
-    AgregarOEditarUsuariosComponent
+    AgregarOEditarUsuariosComponent,
+    PhonePipe
   ],
   imports: [
     BrowserModule,

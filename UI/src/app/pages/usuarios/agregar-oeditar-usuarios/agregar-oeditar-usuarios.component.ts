@@ -81,7 +81,7 @@ export class AgregarOEditarUsuariosComponent implements OnInit {
       apellidoPaterno: this.form.controls.apellidoPaterno.value!,
       apellidoMaterno: this.form.controls.apellidoMaterno.value!,
       salario: +this.form.controls.salario.value!,
-      curp: this.form.controls.curp.value!,
+      curp: this.form.controls.curp.value!.toUpperCase(),
       telefono: this.form.controls.telefono.value!
     };
 
@@ -106,8 +106,8 @@ export class AgregarOEditarUsuariosComponent implements OnInit {
           this.dialogRef.close({result: 'ok'});
         });
       } else {
-        console.error(`error al tratar de guardar un usuario mensaje: ${response.messageError}, code: ${response.httpCode}`);
-        Swal.fire("Ocurrió un error, intente más tarde", undefined, 'error').then(() => this.dialogRef.close({result: 'no'}));
+        console.error(`error al tratar de guardar un usuario mensaje: ${response.messageException}, code: ${response.httpCode}`);
+        Swal.fire(response.messageError, undefined, 'error');
       }
     });
   }
@@ -126,8 +126,8 @@ export class AgregarOEditarUsuariosComponent implements OnInit {
           this.dialogRef.close({result: 'ok'});
         });
       } else {
-        console.error(`error al tratar de guardar un usuario mensaje: ${response.messageError}, code: ${response.httpCode}`);
-        Swal.fire("Ocurrió un error, intente más tarde", undefined, 'error').then(() => this.dialogRef.close({result: 'no'}));
+        console.error(`error al tratar de guardar un usuario mensaje: ${response.messageException}, code: ${response.httpCode}`);
+        Swal.fire(response.messageError, undefined, 'error');
       }
     });
   }

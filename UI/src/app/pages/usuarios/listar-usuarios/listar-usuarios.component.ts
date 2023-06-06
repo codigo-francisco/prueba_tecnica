@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Usuario } from 'src/app/shared/models/usuarios';
 import { UsuariosService } from 'src/app/shared/services/usuarios.service';
 import { AgregarOEditarUsuariosComponent } from '../agregar-oeditar-usuarios/agregar-oeditar-usuarios.component';
 import { AgregarOEditarData } from 'src/app/shared/models/agregar-oeditar-data';
 import Swal from 'sweetalert2';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { DialogResponse } from 'src/app/shared/models/dialog-response';
 
 @Component({
   selector: 'app-listar-usuarios',
@@ -13,7 +17,9 @@ import Swal from 'sweetalert2';
 })
 export class ListarUsuariosComponent implements OnInit {
   displayedColumns = ["nombre","apellidoPaterno","apellidoMaterno","salario","curp","telefono","editar","eliminar"];
-  usuariosSource: Usuario[] = [];
+  usuariosSource = new MatTableDataSource<Usuario>([]);
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
 
   constructor(
     private usuariosService: UsuariosService, 
@@ -27,26 +33,32 @@ export class ListarUsuariosComponent implements OnInit {
   cargarUsuarios() {
     this.usuariosService.consultarUsuarios().subscribe(response => {
       if (!response.hasError) {
-        this.usuariosSource = [];
-        this.usuariosSource.push(... response.data!);
+        this.usuariosSource.data = [];
+        this.usuariosSource.data.push(... response.data!);
+        this.usuariosSource.paginator = this.paginator!;
+        this.usuariosSource.sort = this.sort!;
       } else {
-        console.error(`error en consulta de usuarios, mensaje: ${response.messageError} codigo: ${response.httpCode}`);
+        console.error(`error en consulta de usuarios, mensaje: ${response.messageException} codigo: ${response.httpCode}`);
+        Swal.fire({
+          title: response.messageError,
+          icon: 'error'
+        });
       }
     });
   }
 
   agregarUsuario() {
-    let dialog = this.dialog.open<AgregarOEditarUsuariosComponent>(AgregarOEditarUsuariosComponent);
+    let dialog = this.dialog.open<AgregarOEditarUsuariosComponent, AgregarOEditarData, DialogResponse>(AgregarOEditarUsuariosComponent);
     
     dialog.afterClosed().subscribe(data => {
-      if (data.result == "ok") {
+      if (data?.result == "ok") {
         this.cargarUsuarios();
       }
     });
   }
 
   editarUsuario(usuario: Usuario) {
-    let dialog = this.dialog.open<AgregarOEditarUsuariosComponent, AgregarOEditarData>(AgregarOEditarUsuariosComponent, {
+    let dialog = this.dialog.open<AgregarOEditarUsuariosComponent, AgregarOEditarData, DialogResponse>(AgregarOEditarUsuariosComponent, {
       data: {
         usuario: usuario,
         accion: "Editar"
@@ -54,7 +66,7 @@ export class ListarUsuariosComponent implements OnInit {
     });
 
     dialog.afterClosed().subscribe(data => {
-      if (data.result == "ok") {
+      if (data?.result == "ok") {
         this.cargarUsuarios();
       }
     });
@@ -81,8 +93,8 @@ export class ListarUsuariosComponent implements OnInit {
               this.cargarUsuarios();
             });
           } else {
-            console.error(`error al tratar de guardar un usuario mensaje: ${response.messageError}, code: ${response.httpCode}`);
-            Swal.fire("Ocurrió un error, intente más tarde", undefined, 'error');
+            console.error(`error al tratar de guardar un usuario mensaje: ${response.messageException}, code: ${response.httpCode}`);
+            Swal.fire(response.messageError, undefined, 'error');
           }
         });
       }

@@ -5,6 +5,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
 
 const modules = [
   MatTableModule,
@@ -12,7 +15,9 @@ const modules = [
   MatIconModule,
   MatFormFieldModule,
   MatDialogModule,
-  MatInputModule
+  MatInputModule,
+  MatPaginatorModule,
+  MatSortModule
 ];
 
 @NgModule({
