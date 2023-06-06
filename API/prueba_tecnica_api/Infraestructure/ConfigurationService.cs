@@ -12,6 +12,16 @@ namespace prueba_tecnica_api.Infraestructure
             var configuration = builder.Configuration;
             var services = builder.Services;
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsLocalhost", builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             services.AddSqlServer<GeneralContext>(configuration.GetConnectionString("Default"));
             services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 

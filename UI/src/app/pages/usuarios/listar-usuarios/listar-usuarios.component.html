@@ -1,0 +1,42 @@
+<div class="section-part">
+    <button mat-raised-button color="primary" (click)="agregarUsuario()">
+        <mat-icon>add</mat-icon>
+        <span>Agregar Usuario</span>
+    </button>
+</div>
+<div class="section-part">
+    <table mat-table [dataSource]="usuariosSource" class="mat-elevation-z8">  
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="apellidoPaterno">
+            <th mat-header-cell *matHeaderCellDef> Apellido Paterno </th>
+            <td mat-cell *matCellDef="let element"> {{element.apellidoPaterno}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="apellidoMaterno">
+            <th mat-header-cell *matHeaderCellDef> Apellido Materno </th>
+            <td mat-cell *matCellDef="let element"> {{element.apellidoMaterno}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="salario">
+            <th mat-header-cell *matHeaderCellDef> Salario </th>
+            <td mat-cell *matCellDef="let element"> {{element.salario}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="curp">
+            <th mat-header-cell *matHeaderCellDef> CURP </th>
+            <td mat-cell *matCellDef="let element"> {{element.curp}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="telefono">
+            <th mat-header-cell *matHeaderCellDef> Telefono </th>
+            <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+          </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+</div>
