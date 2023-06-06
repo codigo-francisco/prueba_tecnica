@@ -38,9 +38,9 @@ namespace prueba_tecnica_api.datos.RepositoryImplementations
 
             return affectedRows > 0;
         }
-        public List<Usuario> GetUsuarios()
+        public async Task<List<Usuario>> GetUsuarios()
         {
-            return _context.Usuarios.FromSqlInterpolated($"EXEC ConsultarUsuarios").ToList();
+            return await _context.Usuarios.FromSqlInterpolated($"EXEC ConsultarUsuarios").ToListAsync();
         }
     }
 }

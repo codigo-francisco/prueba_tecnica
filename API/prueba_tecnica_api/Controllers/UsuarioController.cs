@@ -16,13 +16,13 @@ namespace prueba_tecnica_api.Controllers
         }
 
         [HttpGet("listar")]
-        public IActionResult GetUsuarios()
+        public async Task<IActionResult> GetUsuarios()
         {
             var generalResponse = new GeneralResponse<List<UsuarioDTO>>();
 
             try
             {
-                generalResponse.Data = _usuarioRepositorio.GetUsuarios().ToUsuarioDTOList();
+                generalResponse.Data = (await _usuarioRepositorio.GetUsuarios()).ToUsuarioDTOList();
                 generalResponse.HttpCode = 200;
             }
             catch (Exception ex)

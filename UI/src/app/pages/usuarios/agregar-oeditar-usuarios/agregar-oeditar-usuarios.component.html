@@ -1,23 +1,42 @@
 <h1 mat-dialog-title>{{accion}} Usuarios</h1>
-<div mat-dialog-content>
+<div class="form-content" mat-dialog-content [formGroup]="form">
     <form>
         <mat-form-field appearance="outline">
             <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matPreffix>person</mat-icon>
-            <mat-hint>Nombre del usuario</mat-hint>
+            <input matInput placeholder="Nombre" formControlName="nombre">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="this.form.controls.nombre.errors">{{getMessageError(this.form.controls.nombre, 'nombre')}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Apellido Paterno</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matPreffix>person</mat-icon>
-            <mat-hint>Apellido paterno del usuario</mat-hint>
+            <input matInput placeholder="Apellido Paterno" formControlName="apellidoPaterno">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="this.form.controls.apellidoPaterno.errors">{{getMessageError(this.form.controls.apellidoPaterno, 'apellido paterno')}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Apellido Materno</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matPreffix>person</mat-icon>
-            <mat-hint>Apellido materno del usuario</mat-hint>
+            <input matInput placeholder="Apellido Materno" formControlName="apellidoMaterno">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="this.form.controls.apellidoMaterno.errors">{{getMessageError(this.form.controls.apellidoMaterno, 'apellido materno')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Salario</mat-label>
+            <input matInput type="number" placeholder="Salario" formControlName="salario">
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <mat-error *ngIf="this.form.controls.salario.errors">{{getMessageError(this.form.controls.salario, 'salario')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>CURP</mat-label>
+            <input matInput placeholder="CURP" formControlName="curp">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="this.form.controls.curp.errors">{{getMessageError(this.form.controls.curp, 'curp')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Telefono</mat-label>
+            <input matInput placeholder="Telefono" formControlName="telefono">
+            <mat-icon matPrefix>phone</mat-icon>
+            <mat-error *ngIf="this.form.controls.telefono.errors">{{getMessageError(this.form.controls.telefono, 'telefono')}}</mat-error>
         </mat-form-field>
     </form>
+    <button type="button" mat-raised-button color="primary" [disabled]="form.invalid" (click)="guardarOEditar()">{{accion}}</button>
 </div>

@@ -9,7 +9,7 @@ namespace prueba_tecnica_api.dominio.Repositories
 {
     public interface IUsuarioRepositorio
     {
-        List<Usuario> GetUsuarios();
+        Task<List<Usuario>> GetUsuarios();
         bool Agregar(Usuario usuario);
         bool Modificar(Usuario usuario);
         bool Borrar(int id);

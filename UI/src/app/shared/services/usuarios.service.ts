@@ -14,8 +14,31 @@ export class UsuariosService {
 
   constructor(private httpCliente: HttpClient) { }
 
+  private construirURL(nameEndPoint: string) {
+    return `${environment.apiUrl}${this.usuariosEndPoint}${nameEndPoint}`;
+  }
+
   consultarUsuarios(): Observable<GeneralResponse<Usuario[]>> {
-    let urlConsulta = "listar"
-    return this.httpCliente.get<GeneralResponse<Usuario[]>>(`${environment.apiUrl}${this.usuariosEndPoint}${urlConsulta}`);
+    let nameEndPoint = "listar";
+    let urlConsulta = this.construirURL(nameEndPoint);
+    return this.httpCliente.get<GeneralResponse<Usuario[]>>(urlConsulta);
+  }
+
+  guardar(usuario: Usuario): Observable<GeneralResponse<boolean>> {
+    let nameEndPoint = "agregar";
+    let urlAgregar = this.construirURL(nameEndPoint);
+    return this.httpCliente.post<GeneralResponse<boolean>>(urlAgregar, usuario);
+  }
+
+  modificar(usuario: Usuario): Observable<GeneralResponse<boolean>> {
+    let nameEndPoint = "actualizar";
+    let urlActualizar = this.construirURL(nameEndPoint);
+    return this.httpCliente.put<GeneralResponse<boolean>>(urlActualizar, usuario);
+  }
+
+  borrar(usuarioId: number): Observable<GeneralResponse<boolean>> {
+    let nameEndPoint = `borrar/${usuarioId}`;
+    let urlEliminar = this.construirURL(nameEndPoint);
+    return this.httpCliente.delete<GeneralResponse<boolean>>(urlEliminar);
   }
 }
