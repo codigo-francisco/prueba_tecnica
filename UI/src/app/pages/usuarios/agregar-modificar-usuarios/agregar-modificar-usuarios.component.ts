@@ -25,6 +25,9 @@ const regexPhone = /^\d{10}$/;
   styleUrls: ['./agregar-modificar-usuarios.component.scss']
 })
 export class AgregarModificarUsuariosComponent implements OnInit {
+  /**
+   * Esta variable es para manejar los mensajes de carga a través de un componente
+   */
   @ViewChild(CargaCircularComponent) cargaComponent?: CargaCircularComponent;
   
   idUsuario = 0;
@@ -117,6 +120,9 @@ export class AgregarModificarUsuariosComponent implements OnInit {
     return usuario;
   }
 
+  /**
+   * Método para pasar a mayusculas la CURP escrita por el usuario cuando abandone el foco del texto
+   */
   curpBlur() {
     this.form.controls.curp.setValue(this.form.controls.curp.value?.toUpperCase() ?? '');
   }

@@ -6,6 +6,9 @@ import { Router } from "@angular/router";
 import { LoadingService } from "../services/loading.service";
 import { MatDialog } from "@angular/material/dialog";
 
+/**
+ * Provider para manejar los errores de manera global en la aplicación
+ */
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
   constructor(
@@ -15,7 +18,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     private loadingService: LoadingService,
     private matDialog: MatDialog
   ) {}
-
+  
   handleError(error: Error | HttpErrorResponse | any) {
     this.loadingService.hide();
     

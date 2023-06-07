@@ -14,6 +14,9 @@ import { AuthService } from './auth.service';
 })
 export class UsuariosService {
 
+  /**
+   * Endpoint de la API de usuarios
+   */
   private usuariosEndPoint = "usuarios/";
 
   constructor(private httpCliente: HttpClient, private authService: AuthService) { }
@@ -27,6 +30,10 @@ export class UsuariosService {
     return `${environment.apiUrl}${this.usuariosEndPoint}${nameEndPoint}`;
   }
 
+  /**
+   * Método para generar los headers necesarios para la solicitud, contiene al menos el token para la autorización
+   * @returns Un objeto HttpHeaders con los cabeceros necesarios
+   */
   private cargarHeader() {
     let headers = new HttpHeaders();
     headers = headers.append("Authorization",this.authService.getToken());

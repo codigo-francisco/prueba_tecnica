@@ -5,8 +5,10 @@ import { LoginUser } from 'src/app/shared/models/login-user';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import Swal from 'sweetalert2';
 import { CargaCircularComponent } from '../../cargas/carga-circular/carga-circular.component';
-import { take, tap, throwError } from 'rxjs';
 
+/**
+ * Componente para administrar el login de los usuarios registrados para autenticación
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,6 +25,12 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  /**
+   * Método para formatear un mensaje de error dentro del formulario
+   * @param control Control que se revisara que contenga errores
+   * @param nombre Nombre del control
+   * @returns Mensaje de error en caso de tener alguno
+   */
   getMessageError(control: FormControl, nombre: string): string {
     let message = "";
     if (control.errors) {
@@ -39,6 +47,9 @@ export class LoginComponent {
     return message;
   }
 
+  /**
+   * Metodo para solicitar un login a servidor
+   */
   login() {
     if (this.form.valid) {
       let loginUser: LoginUser = {

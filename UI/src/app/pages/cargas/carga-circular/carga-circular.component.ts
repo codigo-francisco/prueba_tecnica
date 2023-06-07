@@ -24,6 +24,11 @@ export class CargaCircularComponent {
     });
   }
 
+  /**
+   * Muestra un dialogo de carga con un progress spinner circular
+   * @param titulo Titulo del dialogo de carga
+   * @param mensaje Mensaje del dialogo de carga
+   */
   public show(titulo: string, mensaje: string) {
     console.log(titulo, mensaje);
     this.titulo = titulo;
@@ -31,6 +36,9 @@ export class CargaCircularComponent {
     this.toggle();
   }
 
+  /**
+   * Esconde el dialogo de carga y reinicia el mensaje y titulo
+   */
   public hide() {
     this.titulo = "";
     this.mensaje = "";

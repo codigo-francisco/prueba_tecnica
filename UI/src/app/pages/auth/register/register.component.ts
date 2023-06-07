@@ -6,6 +6,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import Swal from 'sweetalert2';
 import { CargaCircularComponent } from '../../cargas/carga-circular/carga-circular.component';
 
+/**
+ * Componente para manejar el registro de usuarios para autenticación
+ */
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -22,6 +25,12 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  /**
+   * Método para formatear un mensaje de error dentro del formulario
+   * @param control Control que se revisara que contenga errores
+   * @param nombre Nombre del control
+   * @returns Mensaje de error en caso de tener alguno
+   */
   getMessageError(control: FormControl, nombre: string): string {
     let message = "";
     if (control.errors) {
@@ -38,6 +47,9 @@ export class RegisterComponent {
     return message;
   }
 
+  /**
+   * Método para solicitar el registro del usuario en servidor
+   */
   registrar() {
     if (this.form.valid) {
       let registerUser: RegisterUser = {
