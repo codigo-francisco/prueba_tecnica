@@ -15,7 +15,14 @@ namespace prueba_tecnica_api.datos.RepositoryImplementations
     /// </summary>
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
+        /// <summary>
+        /// Contexto de la base de datos
+        /// </summary>
         private readonly GeneralContext _context;
+        /// <summary>
+        /// Constructor del repostorio de la entidad de usuarios
+        /// </summary>
+        /// <param name="context">Contexto de la base de datos</param>
         public UsuarioRepositorio(GeneralContext context) 
         {
             _context = context;

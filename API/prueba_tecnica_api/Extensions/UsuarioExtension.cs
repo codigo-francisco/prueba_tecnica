@@ -3,6 +3,9 @@ using prueba_tecnica_api.DTO;
 
 namespace prueba_tecnica_api.Extensions
 {
+    /// <summary>
+    /// Clase que almacena las extensiones de conversión de datos para la entidad de Usuario y UsuarioDTO
+    /// </summary>
     public static class UsuarioExtension
     {
         /// <summary>

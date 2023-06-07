@@ -12,6 +12,9 @@ using System.Text;
 
 namespace prueba_tecnica_api.Infraestructure
 {
+    /// <summary>
+    /// Clase que almacena los métodos de extensión de la configuracion de servicios para la aplicación
+    /// </summary>
     public static class ConfigurationService
     {
         /// <summary>

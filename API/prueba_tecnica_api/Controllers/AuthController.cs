@@ -8,6 +8,9 @@ using prueba_tecnica_api.Tokens;
 
 namespace prueba_tecnica_api.Controllers
 {
+    /// <summary>
+    /// Clase controladora para la autenticación de Usuarios
+    /// </summary>
     [Route("api/auth")]
     [AllowAnonymous]
     public class AuthController : ControllerBase
@@ -23,6 +26,11 @@ namespace prueba_tecnica_api.Controllers
             _tokenManager = tokenManager;
         }
 
+        /// <summary>
+        /// Método asincronico para el registro de usuarios
+        /// </summary>
+        /// <param name="userRegister">Usuario a registrar</param>
+        /// <returns>Una respuesta que indica si la operación fue exitosa o no</returns>
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDTO userRegister)
         {
@@ -55,6 +63,11 @@ namespace prueba_tecnica_api.Controllers
             return Ok(generalResponse);
         }
 
+        /// <summary>
+        /// Método para realizar el login de un usuario registrado
+        /// </summary>
+        /// <param name="userLogin">Usuario que va a realizar el login</param>
+        /// <returns>Una respuesta que contiene el token generado a partir de la autenticación</returns>
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser([FromBody] UserLoginDTO userLogin)
         {

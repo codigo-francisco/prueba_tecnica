@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+#nullable disable
+
 namespace prueba_tecnica_api.DTO
 {
     /// <summary>
