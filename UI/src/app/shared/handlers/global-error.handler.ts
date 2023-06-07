@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { LoadingService } from "../services/loading.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -11,7 +12,8 @@ export class GlobalErrorHandler implements ErrorHandler {
     private zone: NgZone,
     private authService: AuthService,
     private router: Router,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private matDialog: MatDialog
   ) {}
 
   handleError(error: Error | HttpErrorResponse | any) {
@@ -24,10 +26,21 @@ export class GlobalErrorHandler implements ErrorHandler {
         if (status == 401) {
             this.authService.logout();
             message = "Su sesión ha caducado, se rediccionara al login";
-            return Swal.fire(message).then(() => this.router.navigateByUrl('login'));
+            return Swal.fire({
+              title: message,
+              icon: 'warning',
+              backdrop: undefined
+            }).then(() =>{
+              this.matDialog.closeAll();
+              this.router.navigateByUrl('login');
+            });
         } else {
-            message = "Ha ocurrido un error desconocido por favor intente más tarde";
-            return Swal.fire(message);
+            message = "Ha ocurrido un error por favor intente más tarde";
+            return Swal.fire({
+              title: message,
+              icon: 'error',
+              backdrop: undefined
+            });
         }
     });
 

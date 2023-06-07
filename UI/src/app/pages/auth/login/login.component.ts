@@ -13,7 +13,7 @@ import { take, tap, throwError } from 'rxjs';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  isLogging = false;
+  clicked = false;
   form = new FormGroup({
     "username": new FormControl("", [Validators.required]),
     "password": new FormControl("", [Validators.required])
@@ -46,11 +46,12 @@ export class LoginComponent {
         password: this.form.controls.password.value!
       }
 
+      this.clicked = true;
       this.cargaComponent?.show("Autenticando","Se está realizando el proceso de autenticación, por favor espere");
 
       this.authService.login(loginUser).subscribe(response => {
         this.cargaComponent?.hide();
-
+        this.clicked = false;
         if (!response.hasError) {
           this.authService.setToken(response.data?.token);
           this.router.navigateByUrl('listar');
@@ -58,9 +59,14 @@ export class LoginComponent {
           console.error(`Error al tratar de hacer login, message: ${response.messageException}`);
           Swal.fire({
             title: response.messageError,
-            icon: 'error'
+            icon: 'error',
+            backdrop: undefined
           });
         }
+      }, error => {
+        this.cargaComponent?.hide();
+        this.clicked = false;
+        throw error;
       });
     }
   }
