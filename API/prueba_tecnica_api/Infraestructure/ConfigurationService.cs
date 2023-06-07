@@ -6,7 +6,12 @@ namespace prueba_tecnica_api.Infraestructure
 {
     public static class ConfigurationService
     {
-        public static IServiceCollection ConfigureServices(this WebApplicationBuilder builder)
+        /// <summary>
+        /// Método para configuración personalizadas de servicios de la aplicación
+        /// </summary>
+        /// <param name="builder">El webapplication builder que se está utilizando para construir la aplicación</param>
+        /// <returns>El builder que se está utilizando en la aplicación</returns>
+        public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
 
             var configuration = builder.Configuration;
@@ -25,7 +30,7 @@ namespace prueba_tecnica_api.Infraestructure
             services.AddSqlServer<GeneralContext>(configuration.GetConnectionString("Default"));
             services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 
-            return services;
+            return builder;
         }
     }
 }

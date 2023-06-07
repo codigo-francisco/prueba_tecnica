@@ -7,8 +7,12 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
+/**
+ * Modulos para importar y exportar de Angular Material
+ */
 const modules = [
   MatTableModule,
   MatButtonModule,
@@ -17,9 +21,13 @@ const modules = [
   MatDialogModule,
   MatInputModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatProgressSpinnerModule
 ];
 
+/**
+ * Modulo que contiene los modulos de Angular MAterial
+ */
 @NgModule({
   declarations: [],
   imports: modules,

@@ -1,3 +1,6 @@
+/**
+ * Interfaz para representar el DTO del Usuario
+ */
 export interface Usuario {
     id?: number;
     nombre: string;

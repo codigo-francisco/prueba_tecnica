@@ -7,6 +7,9 @@ using prueba_tecnica_api.Responses;
 
 namespace prueba_tecnica_api.Controllers
 {
+    /// <summary>
+    /// Controlador de los usuarios, aquí se realizan las operaciones CRUD sobre los ususarios
+    /// </summary>
     [Route("api/usuarios")]
     public class UsuarioController : ControllerBase
     {
@@ -16,14 +19,18 @@ namespace prueba_tecnica_api.Controllers
             _usuarioRepositorio = usuarioRepositorio;
         }
 
+        /// <summary>
+        /// Método para listar usuarios en la base de datos
+        /// </summary>
+        /// <returns>Una lista de todos los usuarios existentes en la base de datos</returns>
         [HttpGet("listar")]
-        public async Task<IActionResult> GetUsuarios()
+        public async Task<IActionResult> ListarUsuarios()
         {
             var generalResponse = new GeneralResponse<List<UsuarioDTO>>();
 
             try
             {
-                generalResponse.Data = (await _usuarioRepositorio.GetUsuarios()).ToUsuarioDTOList();
+                generalResponse.Data = (await _usuarioRepositorio.ListarUsuarios()).ToUsuarioDTOList();
                 generalResponse.HttpCode = 200;
             }
             catch (Exception ex)
@@ -34,6 +41,11 @@ namespace prueba_tecnica_api.Controllers
             return Ok(generalResponse);
         }
 
+        /// <summary>
+        /// Método para agregar un usuario en la base de datos
+        /// </summary>
+        /// <param name="usuario">DTO del usuario a agregar en la base de datos</param>
+        /// <returns>Una respuesta si la operación fue exitosa</returns>
         [HttpPost("agregar")]
         public IActionResult AgregarUsuario([FromBody] UsuarioDTO usuario)
         {
@@ -66,6 +78,11 @@ namespace prueba_tecnica_api.Controllers
             return Ok(generalResponse);
         }
 
+        /// <summary>
+        /// Método para modificar un usuario en la base de datos
+        /// </summary>
+        /// <param name="usuario">DTO del usuario a modificar en base de datos</param>
+        /// <returns>Una respuesta si la operación fue exitosa</returns>
         [HttpPut("actualizar")]
         public IActionResult ModificarUsuario([FromBody] UsuarioDTO usuario)
         {
@@ -83,6 +100,11 @@ namespace prueba_tecnica_api.Controllers
             return Ok(generalResponse);
         }
 
+        /// <summary>
+        /// Método para borrar el usuario en la base de datos
+        /// </summary>
+        /// <param name="usuarioId">Id del usuario para borrar en la base de datos</param>
+        /// <returns>Una respuesta si la operación fue exitosa</returns>
         [HttpDelete("borrar/{usuarioId}")]
         public IActionResult BorrarUsuario(int usuarioId)
         {
@@ -98,12 +120,6 @@ namespace prueba_tecnica_api.Controllers
                 generalResponse.SetError("Ocurrió un error al tratar de borrar al usuario", ex);
             }
             return Ok(generalResponse);
-        }
-
-        [HttpGet("ping")]
-        public IActionResult Ping()
-        {
-            return Ok("Server OK");
         }
     }
 }

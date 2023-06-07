@@ -15,8 +15,4 @@
     <ProjectReference Include="..\prueba_tecnica_api.dominio\prueba_tecnica_api.dominio.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="StoreProcedures\" />
-  </ItemGroup>
-
 </Project>

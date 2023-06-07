@@ -8,8 +8,16 @@ using System.Threading.Tasks;
 
 namespace prueba_tecnica_api.datos.Mappers
 {
+    /// <summary>
+    /// Clase para mapear una entidad Usuario con su respectiva información en base de datos
+    /// </summary>
     internal static class UsuarioMapper
     {
+        /// <summary>
+        /// Método para mapear la entidad usuario con la base de datos
+        /// </summary>
+        /// <param name="modelBuilder">Objeto ModelBuilder que se está utilizando para modelar y mapear las entidad</param>
+        /// <returns>El objeto ModelBuilder que se está utilizando</returns>
         internal static ModelBuilder ModelingUsuario(this ModelBuilder modelBuilder)
         {
             var entity = modelBuilder.Entity<Usuario>();

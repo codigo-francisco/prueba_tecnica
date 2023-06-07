@@ -1,3 +1,4 @@
+<app-carga-circular></app-carga-circular>
 <h1 mat-dialog-title>{{accion}} Usuarios</h1>
 <div class="form-content" mat-dialog-content [formGroup]="form">
     <form>
@@ -27,7 +28,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>CURP</mat-label>
-            <input matInput placeholder="CURP" formControlName="curp">
+            <input matInput placeholder="CURP" formControlName="curp" (blur)="curpBlur()">
             <mat-icon matPrefix>person</mat-icon>
             <mat-error *ngIf="this.form.controls.curp.errors">{{getMessageError(this.form.controls.curp, 'curp')}}</mat-error>
         </mat-form-field>
@@ -38,5 +39,5 @@
             <mat-error *ngIf="this.form.controls.telefono.errors">{{getMessageError(this.form.controls.telefono, 'telefono')}}</mat-error>
         </mat-form-field>
     </form>
-    <button type="button" mat-raised-button color="primary" [disabled]="form.invalid" (click)="guardarOEditar()">{{accion}}</button>
+    <button type="button" mat-raised-button color="primary" [disabled]="form.invalid" (click)="guardarOModificar()">{{accion}}</button>
 </div>

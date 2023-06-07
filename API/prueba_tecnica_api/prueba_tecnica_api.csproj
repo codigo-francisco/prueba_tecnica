@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Datos\prueba_tecnica_api.datos.csproj" />
     <ProjectReference Include="..\prueba_tecnica_api.datos\prueba_tecnica_api.datos.csproj" />
     <ProjectReference Include="..\prueba_tecnica_api.dominio\prueba_tecnica_api.dominio.csproj" />
   </ItemGroup>

@@ -1,20 +1,32 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AgregarOEditarData } from 'src/app/shared/models/agregar-oeditar-data';
+import { AgregarEditarData } from 'src/app/shared/models/agregar-editar-data';
 import { Usuario } from 'src/app/shared/models/usuarios';
 import { UsuariosService } from 'src/app/shared/services/usuarios.service';
 import Swal from 'sweetalert2';
+import { CargaCircularComponent } from '../../cargas/carga-circular/carga-circular.component';
 
+/**
+ * Expresión regular para una CURP en mayusculas
+ */
 const regexCurp = /^[A-Z]{4}\d{6}[HM][A-Z]{5}\d{2}$/;
+/**
+ * Expresión regular para un telefono de 10 digitos
+ */
 const regexPhone = /^\d{10}$/;
 
+/**
+ * Componente para el agregado o modificación de un Usuario
+ */
 @Component({
-  selector: 'app-agregar-oeditar-usuarios',
-  templateUrl: './agregar-oeditar-usuarios.component.html',
-  styleUrls: ['./agregar-oeditar-usuarios.component.scss']
+  selector: 'app-agregar-modificar-usuarios',
+  templateUrl: './agregar-modificar-usuarios.component.html',
+  styleUrls: ['./agregar-modificar-usuarios.component.scss']
 })
-export class AgregarOEditarUsuariosComponent implements OnInit {
+export class AgregarModificarUsuariosComponent implements OnInit {
+  @ViewChild(CargaCircularComponent) cargaComponent?: CargaCircularComponent;
+  
   idUsuario = 0;
   accion = "Agregar"
   form = new FormGroup({
@@ -28,8 +40,8 @@ export class AgregarOEditarUsuariosComponent implements OnInit {
 
   constructor(
     private usuariosService: UsuariosService,
-    private dialogRef: MatDialogRef<AgregarOEditarUsuariosComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: AgregarOEditarData
+    private dialogRef: MatDialogRef<AgregarModificarUsuariosComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: AgregarEditarData
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +61,12 @@ export class AgregarOEditarUsuariosComponent implements OnInit {
     }
   }
 
+  /**
+   * Método para obtener el texto del mensaje de error de acuerdo al tipo de error que contiene el control
+   * @param control control que se analizara si tiene errores
+   * @param nombre nombre del control
+   * @returns mensaje de error en caso de haber alguno
+   */
   getMessageError(control: FormControl, nombre: string): string {
     let message = "";
     if (control.errors) {
@@ -65,16 +83,23 @@ export class AgregarOEditarUsuariosComponent implements OnInit {
     return message;
   }
 
-  guardarOEditar() {
+  /**
+   * Método que activa el boton del formulario, agrega o edita acorde a la acción del componente
+   */
+  guardarOModificar() {
     if (this.form.valid) {
       if (this.accion == "Agregar") {
-        this.guardar();
+        this.agregar();
       } else if (this.accion == "Editar") {
-        this.editar();
+        this.modificar();
       }
     }
   }
 
+  /**
+   * Metodó para generar un Usuario a partir de los datos en el formulario
+   * @returns Usuario que se va a enviar a través de la API Web
+   */
   generarUsuario(): Usuario {
     const usuario: Usuario = {
       nombre: this.form.controls.nombre.value!,
@@ -92,10 +117,20 @@ export class AgregarOEditarUsuariosComponent implements OnInit {
     return usuario;
   }
 
-  guardar() {
+  curpBlur() {
+    this.form.controls.curp.setValue(this.form.controls.curp.value?.toUpperCase() ?? '');
+  }
+
+  /**
+   * Método para agregar un nuevo Usuario
+   */
+  agregar() {
     const usuario = this.generarUsuario();
 
-    this.usuariosService.guardar(usuario).subscribe(response => {
+    this.cargaComponent?.show("Agregando al usuario", "Se está realizando la operación, por favor espere");
+
+    this.usuariosService.agregar(usuario).subscribe(response => {
+      this.cargaComponent?.hide();
       if (!response.hasError) {
         Swal.fire({
           title: "Usuario agregado",
@@ -112,10 +147,16 @@ export class AgregarOEditarUsuariosComponent implements OnInit {
     });
   }
 
-  editar() {
+  /**
+   * Método para editar modificar un usuario
+   */
+  modificar() {
     const usuario = this.generarUsuario();
 
+    this.cargaComponent?.show("Modficando al usuario", "Se está realizando la operación, por favor espere");
+
     this.usuariosService.modificar(usuario).subscribe(response => {
+      this.cargaComponent?.hide();
       if (!response.hasError) {
         Swal.fire({
           title: "Usuario modificado",
