@@ -1,0 +1,5 @@
+CREATE PROCEDURE ListarUsuarios
+AS
+BEGIN
+	SELECT * FROM Usuarios
+END

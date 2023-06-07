@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using prueba_tecnica_api.datos.Mappers;
 using prueba_tecnica_api.dominio.Entities;
 
@@ -7,7 +8,7 @@ namespace prueba_tecnica_api.datos.Contexts
     /// <summary>
     /// Clase que representa el contexto en Base de Datos
     /// </summary>
-    public class GeneralContext : DbContext
+    public class GeneralContext : IdentityDbContext<UserIdentity>
     {
         /// <summary>
         /// Entidad de Usuarios
@@ -21,8 +22,9 @@ namespace prueba_tecnica_api.datos.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ModelingUsuario();
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ModelingUsuario();
         }
     }
 }

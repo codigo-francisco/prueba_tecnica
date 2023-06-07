@@ -1,4 +1,6 @@
-﻿namespace prueba_tecnica_api.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace prueba_tecnica_api.DTO
 {
     /// <summary>
     /// Clase DTO (Data Transfer Object) para enviar y recibir datos del Usuario en API

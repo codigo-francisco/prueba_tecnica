@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using prueba_tecnica_api.dominio.Repositories;
 using prueba_tecnica_api.DTO;
@@ -10,6 +11,7 @@ namespace prueba_tecnica_api.Controllers
     /// <summary>
     /// Controlador de los usuarios, aquí se realizan las operaciones CRUD sobre los ususarios
     /// </summary>
+    [Authorize]
     [Route("api/usuarios")]
     public class UsuarioController : ControllerBase
     {
