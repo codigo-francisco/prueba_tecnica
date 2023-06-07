@@ -10,6 +10,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DialogResponse } from 'src/app/shared/models/dialog-response';
 import { CargaCircularComponent } from '../../cargas/carga-circular/carga-circular.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
 
 /**
  * Componente que lista a los usuarios y realiza acciones para la manipulación de los usuarios
@@ -28,7 +30,9 @@ export class ListarUsuariosComponent implements OnInit {
 
   constructor(
     private usuariosService: UsuariosService, 
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -128,5 +132,13 @@ export class ListarUsuariosComponent implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Evento para cerrar sesión de la aplicación
+   */
+  cerrarSesion() {
+    this.authService.logout();
+    this.router.navigateByUrl('login');
   }
 }

@@ -1,0 +1,30 @@
+.root-login {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d9d7d7;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 1px;
+}
+
+.container-login {
+    width: 400px;
+    height: 300px;
+}
+
+.format-text {
+    text-align: center;
+}
+
+mat-card {
+    padding: 8px;
+}
+
+mat-card-title {
+    text-align: center;
+}

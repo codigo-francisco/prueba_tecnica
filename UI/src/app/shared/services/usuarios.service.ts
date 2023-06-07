@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { GeneralResponse } from '../models/general-response';
 import { Usuario } from '../models/usuarios';
+import { AuthService } from './auth.service';
 
 /**
  * Servicio para consultar la API de Usuarios
@@ -15,7 +16,7 @@ export class UsuariosService {
 
   private usuariosEndPoint = "usuarios/";
 
-  constructor(private httpCliente: HttpClient) { }
+  constructor(private httpCliente: HttpClient, private authService: AuthService) { }
 
   /**
    * Método para construir una URL para las operaciones
@@ -26,6 +27,12 @@ export class UsuariosService {
     return `${environment.apiUrl}${this.usuariosEndPoint}${nameEndPoint}`;
   }
 
+  private cargarHeader() {
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization",this.authService.getToken());
+    return headers;
+  }
+
   /**
    * Método para listar todos los usuarios a través del EndPoint de Usuarios
    * @returns Un Observable de la consulta a la API Web
@@ -33,7 +40,9 @@ export class UsuariosService {
   listarUsuarios(): Observable<GeneralResponse<Usuario[]>> {
     let nameEndPoint = "listar";
     let urlConsulta = this.construirURL(nameEndPoint);
-    return this.httpCliente.get<GeneralResponse<Usuario[]>>(urlConsulta);
+    return this.httpCliente.get<GeneralResponse<Usuario[]>>(urlConsulta, {
+      headers: this.cargarHeader()
+    });
   }
 
   /**
@@ -44,7 +53,9 @@ export class UsuariosService {
   agregar(usuario: Usuario): Observable<GeneralResponse<boolean>> {
     let nameEndPoint = "agregar";
     let urlAgregar = this.construirURL(nameEndPoint);
-    return this.httpCliente.post<GeneralResponse<boolean>>(urlAgregar, usuario);
+    return this.httpCliente.post<GeneralResponse<boolean>>(urlAgregar, usuario, {
+      headers: this.cargarHeader()
+    });
   }
 
   /**
@@ -55,7 +66,9 @@ export class UsuariosService {
   modificar(usuario: Usuario): Observable<GeneralResponse<boolean>> {
     let nameEndPoint = "actualizar";
     let urlActualizar = this.construirURL(nameEndPoint);
-    return this.httpCliente.put<GeneralResponse<boolean>>(urlActualizar, usuario);
+    return this.httpCliente.put<GeneralResponse<boolean>>(urlActualizar, usuario, {
+      headers: this.cargarHeader()
+    });
   }
 
   /**
@@ -66,6 +79,8 @@ export class UsuariosService {
   borrar(usuarioId: number): Observable<GeneralResponse<boolean>> {
     let nameEndPoint = `borrar/${usuarioId}`;
     let urlEliminar = this.construirURL(nameEndPoint);
-    return this.httpCliente.delete<GeneralResponse<boolean>>(urlEliminar);
+    return this.httpCliente.delete<GeneralResponse<boolean>>(urlEliminar, {
+      headers: this.cargarHeader()
+    });
   }
 }

@@ -1,11 +1,15 @@
 <app-carga-circular></app-carga-circular>
 <div class="root">
   <div></div>
-  <div>
+  <div class="opciones">
     <button mat-raised-button color="primary" (click)="agregarUsuario()">
         <mat-icon>add</mat-icon>
         <span>Agregar Usuario</span>
     </button>
+    <button mat-raised-button color="primary" (click)="cerrarSesion()">
+      <mat-icon>close</mat-icon>
+      <span>Cerrar Sesión</span>
+  </button>
   </div>
   <div class="column-table">
     <table mat-table [dataSource]="usuariosSource" matSort class="mat-elevation-z8">  

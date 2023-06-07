@@ -10,8 +10,7 @@ namespace prueba_tecnica_api.Extensions
             return new UserIdentity()
             {
                 UserName = userDTO.UserName,
-                Email = userDTO.Email,
-                PhoneNumber = userDTO.PhoneNumber
+                Email = userDTO.Email
             };
         }
     }

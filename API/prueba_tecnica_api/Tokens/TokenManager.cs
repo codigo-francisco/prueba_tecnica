@@ -57,7 +57,7 @@ namespace prueba_tecnica_api.Tokens
                 issuer: jwtSettings["validIssuer"],
                 audience: jwtSettings["validAudience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["expiresIn"])),
+                expires: DateTime.Now.AddHours(Convert.ToDouble(jwtSettings["expiresIn"])),
                 signingCredentials: signingCredentials
             );
             return tokenOptions;

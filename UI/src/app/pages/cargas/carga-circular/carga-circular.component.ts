@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { LoadingService } from 'src/app/shared/services/loading.service';
 
 /**
  * Componente para mostrar una pantalla de carga
@@ -14,7 +15,14 @@ export class CargaCircularComponent {
   mensaje = "mensaje";
 
   constructor(
-  ) { }
+    private loadingService: LoadingService
+  ) {
+    this.loadingService.SendState.asObservable().subscribe(state => {
+      if (state){
+        this.hide();
+      }
+    });
+  }
 
   public show(titulo: string, mensaje: string) {
     console.log(titulo, mensaje);

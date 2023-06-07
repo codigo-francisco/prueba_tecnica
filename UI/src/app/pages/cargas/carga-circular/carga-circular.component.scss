@@ -6,10 +6,12 @@
     width: 100%;
     height: 100%;
     position: absolute;
+    z-index: 2;
 }
 .carga-circular {
-    width: 250px;
-    height: 250px;
+    width: 400px;
+    height: 300px;
+    background-color: white;
 }
 .circular-text {
     text-align: center;
